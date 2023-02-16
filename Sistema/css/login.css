@@ -54,3 +54,10 @@ body{
       font-size: 3.5rem;
   }
 }
+.al{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    color: black;
+ 
+}
