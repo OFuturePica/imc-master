@@ -3,6 +3,7 @@ html,body{
   height: 100%;
 }
 
+
 body{
   display: -ms-flexbox;
   display: flex;
@@ -14,9 +15,12 @@ body{
 }
 .form-signin {
   width: 100%;
-  max-width: 330px;
+  max-width: 440px;
+  border-radius: 7PX;
+  box-shadow: 10px 10px 40px rgba(19, 19, 19, 0.3);
   padding: 15px;
   margin: auto;
+   background-color: #6AB8FF;
 }
 
 .form-signin .checkbox {
