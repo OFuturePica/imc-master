@@ -20,11 +20,7 @@
       <i class="fas fa-bars" id="header-toggle"></i>
     </div>
     <div class="header_user">
-      <?php
-      if (isset($_SESSION["usuario"])) {
-        echo "<h6>" . $_SESSION["usuario"] . "</h6>";
-      }
-      ?>
+   
 
     </div>
   </header>
@@ -34,12 +30,11 @@
         <a class="nav_logo" title="Home" id="home_link"> <i class="fas fa-home nav_logo-icon"></i> <span class="nav_logo-name">IMC-MASTER</span>
         </a>
         <div class="nav_list">
-          <a href="#" class="nav_link" title="Categoria" id="categoria_link">
-            <i class="fas fa-tag nav_icon"></i> <span class="nav_name">Categoria</span>
+        
           </a>
           <a href="#" class="nav_link" title="Contas a Receber" id="contareceber_link">
             <i class="fas fa-calendar-plus nav_icon"></i>
-            <span class="nav_name">Contas a Receber</span>
+            <span class="nav_name">imc diario</span>
           </a>
           <a class="nav_link" title="Usuário" id="usuario_link">
             <i class="fas fa-user-cog nav_icon"></i>
@@ -128,8 +123,8 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p>Syscash - Sistema financeiro para fins educacionais do estudo da linguagem PHP</p>
-          <p>Desenvolvido por Alexandre - Desde 2021–<script>
+          <p>imc master - Sistema de acompanha mento de peso</p>
+          <p>Desenvolvido por Kaue Marlon Pavanello e Nicollas Cauã Todt - Desde 2023–<script>
               document.write(new Date().getFullYear())
             </script>
           </p>

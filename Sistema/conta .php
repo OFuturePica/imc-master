@@ -62,7 +62,7 @@
             <button type="submit" class="btn btn-primary" id="botao_cadastrar">Cadastrar</button>
             <button type="reset" class="btn btn-secondary" id="botao_limpar">Limpar</button>
         </form>
-        <p class="text-center"><a href="./telaPrincipal.php">Cadastrar-se!</a></p>
+        <p class="text-center"><a href="./menu.php">Cadastrar-se!</a></p>
      
     </main>
 
