@@ -1,3 +1,51 @@
+<?php
+ini_set("session.cookie_secure", 1);
+session_start();
+?>
+<?php
+//require_once("conexão.php");
+
+if(filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST"){
+    try {
+        $erros = [];
+        $login = filter_input(INPUT_POST, "login", FILTER_SANITIZE_STRING);
+        $senha = filter_input(INPUT_POST, "senha", FILTER_SANITIZE_STRING);
+
+        $sql = "select * form usuario where login = ?";
+
+        $conexao = new PDO("mysql:host=" . servidor . ";dbname=" . BANCO, USUARIO,  SENHA);
+
+        $pre = $conexao->prepare($sql);
+        $pre->execute(array(
+            $login
+        ));
+
+        $resultado = $pre->fetch();
+
+        if(!$resultado){
+            throw new Exeception("login inválido!");
+        }else{
+            if (password_verify($senha, $resultado["senha"]) === false) {
+               throw new Exeception("senha inválida!"); 
+            }else {
+                $_SESSION["usuario_id"] = $resultado["id"];
+                $_SESSION["usuario"] = $resultado["nome"];
+            }
+        }
+
+        header("HTTP 1/1 302 Redirect");
+        header("Location: menu.php");
+
+    } catch (Exeception $e) {
+        $erros[] = $e->getMessage();
+        $_SESSION["erros"] = $erros;
+    } finally {
+        $conexao = null;
+    }
+}
+?>
+
+
 
 <!doctype html>
 <html lang="pt-BR">
@@ -64,7 +112,7 @@
             <script>
                 document.write(new Date().getFullYear())
             </script>
-            | Syscash - O Seu Sistema de Finanças | Alexandre -
+            | IMC-MASTER - O Seu Sistema de gerenciador de pesso e altura   | desenvolvido por Kaue Marlon Pavanello e Nicollas Cauã Todt
             
         </p>
     </footer>
@@ -75,4 +123,4 @@
     <script src="./js/sistema/login.js"></script>
 </body>
 
-</html>
+</html>s

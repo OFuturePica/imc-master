@@ -1,3 +1,80 @@
+<?php
+session_start();
+
+?>
+<?php
+//require_once("conexão.php");
+
+if(filter_input(INPUT_SERVER,  "REQUEST_METHOD") === "POST") {
+    try{
+        $erros = [];
+        $dados = [];
+
+        $nome = filter_input(INPUT_POST. "nome", FILTER_SANITIZE_STRING);
+        if (!$nome) {
+            $erros["nome"] = "Nome: campo vazio e  ou informção incálida";
+        }
+        $dados["nome"] = $nome;
+
+        $email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);  
+        if (!$email){
+            $erros["email"] = "E-mail: campo vasio e ou informação inválida" ; 
+        }
+        $dados["email"] = $email;
+
+        $login = filter_input(INPUT_POST, "login",  FILTER_VALIDATE_STRING);
+        if (!$login){
+            $erros["login"] =  "Login: campo vazio e ou informção inválida" ; 
+        }
+        $dados["login"] = $login;
+
+        $senha =  filter_input(INPUT_POST, "senha", FILTER_VALIDATE_STRING);
+        if (!$senha){
+            $erros["senha"] = "Senha: campo vazio e ou inválido";
+        }
+        $dasdos["senha"] = $senha;
+        $_SESSION["dados"] = $dados;
+
+        if (count($erros) > 0 ) {
+            throw new Exeception("Erros nas iformações ");
+        }
+
+        $conexao = new PDO("mysql:host=" . SERVIDOR . ";idname=" . BANCO, USUARIO, SENHA);
+
+        $sql = "select * form usuario where login= ?";
+        $pre = $conexao->prepare($sql);
+        $pre->execute(array(
+            $login
+        ));
+        $resultado = $pre->fetch();
+        if ($resultado) {
+            throw new Exception("Login: Login já cadastrado!");
+        }
+
+        $senha = password_hash($senha, PASSWORD_BCRYPT, ['cost' => 12]);
+
+        $sql= "insert into usuario(nome, email, login, senha) VALUE(?, ?, ?, ?)";
+
+        $pre = $conexao->prepare($sql);
+        $pre->execute(array(
+            $nome,
+            $email,
+            $login,
+            $senha
+        ));
+
+        header("HTTP 1/1 302 Redirect");
+        header("Location: idex.php");
+    }catch (Exception $e){
+        $erros[] =  $e->getMenssage();
+        $_SESSION["erros"] = $erros;
+    }finally {
+        $conexao = null;
+    }
+}
+
+?>
+
 <!doctype html>
 <html lang="pt-BR">
 
@@ -32,6 +109,18 @@
         </nav>
     </header>
     <main class="form-signin">
+    <?php
+        if (isset($_SESSION["erros"])) {
+            echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>";
+            echo "<button type='button' class='btn-close btn-sm' data-bs-dismiss='alert'
+                aria-label='Close'></button>";
+            foreach ($_SESSION["erros"] as $chave => $valor) {
+                echo $valor . "<br>";
+            }
+            echo "</div>";
+        }
+        unset($_SESSION["erros"]);
+        ?>
        
         <h4>Cadastro inicial do usuário</h4>
         <form id="usuario_cadastro" action="cadastro_inicial.php" method="post">
@@ -72,7 +161,7 @@
             &copy; <script>
                 document.write(new Date().getFullYear())
             </script>
-            | Syscash - O Seu Sistema de Finanças | Alexandre -
+          | IMC-MASTER - O Seu Sistema de gerenciador de pesso e altura   | desenvolvido por Kaue Marlon Pavanello e Nicollas Cauã Todt
             <a href="https://www.youtube.com/channel/UCUeidwLoy7YK4kEeuq2sPgw" target="_blank">Peregrino de TI</a>
         </p>
     </footer>
