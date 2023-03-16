@@ -123,7 +123,7 @@ if(filter_input(INPUT_SERVER,  "REQUEST_METHOD") === "POST") {
         ?>
        
         <h4>Cadastro inicial do usuário</h4>
-        <form id="usuario_cadastro" action="cadastro_inicial.php" method="post">
+        <form id="usuario_cadastro" action="conta.php" method="post">
           <div class="form-floating">
               <label for="email" class="col-sm-2 col-form-label col-form-label">E-mail</label>
               <div >
