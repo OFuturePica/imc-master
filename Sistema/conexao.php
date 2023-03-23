@@ -1,8 +1,17 @@
 <?php
-const SERVIDOR = "localhost:3306";
+$usuario SERVIDOR = "localhost:3306";
 
-const BANCO = "imc-master";
+$senha BANCO = "imc-master";
 
-const USUARIO = "";
+$database USUARIO = "";
 
-const SENHA = "root";
+$host SENHA = "root";
+
+$mysqli = new mysqli($host, $usuario, $senha, $database);
+
+if($mysqli->error) {
+    die("fanha ao conctar" . $mysqli->error);
+}
+else{
+    echo"fai";
+}

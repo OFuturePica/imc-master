@@ -1,6 +1,7 @@
 <?php
 ini_set("session.cookie_secure", 1);
 session_start();
+
 ?>
 <?php
 //require_once("conexão.php");
@@ -105,6 +106,7 @@ if(filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST"){
             <button class="w-100 btn btn-lg btn-primary" type="submit">Logar</button>
         </form>
         <p class="text-center"><a href="./conta .php">Cadastrar-se!</a></p>
+        <p class="text-center"><a href="./calculo_imc.php">Cadastrar-se!</a></p>
     </main>
     <footer class="container">
         

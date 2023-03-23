@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+body{
+    display: -ms-flexbox;
+    -ms-flex-align: center;
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: black;
+    color: white;
+}
+main{
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+.divAltura, .divPeso, .divCalc{
+    width: 90%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+input, button {
+    padding: 10px;
+    font-size: 20px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+}
+button{
+    cursor: pointer;
+    background-color: blueviolet;
+    color: white;
+}
+@media (max-width: 500px) {
+    body, input, button{
+        font-size: 15px;
+    }
+}
