@@ -4,7 +4,7 @@ session_start();
 
 ?>
 <?php
-//require_once("conexão.php");
+require_once("conexao.php");
 
 if(filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST"){
     try {
@@ -14,7 +14,7 @@ if(filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST"){
 
         $sql = "select * form usuario where login = ?";
 
-        $conexao = new PDO("mysql:host=" . servidor . ";dbname=" . BANCO, USUARIO,  SENHA);
+        $conexao = new PDO("mysql:host=" . SERVIDOR . ";dbname=" . BANCO, USUARIO,  SENHA);
 
         $pre = $conexao->prepare($sql);
         $pre->execute(array(
@@ -24,10 +24,10 @@ if(filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST"){
         $resultado = $pre->fetch();
 
         if(!$resultado){
-            throw new Exeception("login inválido!");
+            throw new \Exception("login inválido!");
         }else{
             if (password_verify($senha, $resultado["senha"]) === false) {
-               throw new Exeception("senha inválida!"); 
+               throw new \Exception("senha inválida!"); 
             }else {
                 $_SESSION["usuario_id"] = $resultado["id"];
                 $_SESSION["usuario"] = $resultado["nome"];
@@ -35,10 +35,10 @@ if(filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST"){
         }
 
         header("HTTP 1/1 302 Redirect");
-        header("Location: menu.php");
+        header("Location: m.php");
 
-    } catch (Exeception $e) {
-        $erros[] = $e->getMessage();
+    } catch (Exeception $pe) {
+        $erros[] = $pe->getMessage();
         $_SESSION["erros"] = $erros;
     } finally {
         $conexao = null;
@@ -94,7 +94,7 @@ if(filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST"){
         }
         unset($_SESSION["erros"]);
         ?>
-        <form id="formlogin" action="login.php" method="post">
+        <form id="formlogin" action="index.php" method="post">
             <h1 class="h3 mb-3 fw-normal">Favor logar-se</h1>
             <div  class="form-floating">
             <input type="texto" class="form-control" id="login" name="login" maxlength="10" placeholder="Login" required="required"> <label for="login">Login
@@ -106,7 +106,7 @@ if(filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST"){
             <button class="w-100 btn btn-lg btn-primary" type="submit">Logar</button>
         </form>
         <p class="text-center"><a href="./conta .php">Cadastrar-se!</a></p>
-        <p class="text-center"><a href="./calculo_imc.php">Cadastrar-se!</a></p>
+       
     </main>
     <footer class="container">
         

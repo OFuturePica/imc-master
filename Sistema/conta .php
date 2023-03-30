@@ -3,14 +3,14 @@ session_start();
 
 ?>
 <?php
-//require_once("conexão.php");
+require_once("conexao.php");
 
 if(filter_input(INPUT_SERVER,  "REQUEST_METHOD") === "POST") {
     try{
         $erros = [];
         $dados = [];
 
-        $nome = filter_input(INPUT_POST. "nome", FILTER_SANITIZE_STRING);
+        $nome = filter_input(INPUT_POST, "nome", FILTER_SANITIZE_STRING );
         if (!$nome) {
             $erros["nome"] = "Nome: campo vazio e  ou informção incálida";
         }
@@ -22,13 +22,13 @@ if(filter_input(INPUT_SERVER,  "REQUEST_METHOD") === "POST") {
         }
         $dados["email"] = $email;
 
-        $login = filter_input(INPUT_POST, "login",  FILTER_VALIDATE_STRING);
+        $login = filter_input(INPUT_POST, "login",  FILTER_SANITIZE_STRING );
         if (!$login){
             $erros["login"] =  "Login: campo vazio e ou informção inválida" ; 
         }
         $dados["login"] = $login;
 
-        $senha =  filter_input(INPUT_POST, "senha", FILTER_VALIDATE_STRING);
+        $senha =  filter_input(INPUT_POST, "senha", FILTER_SANITIZE_STRING );
         if (!$senha){
             $erros["senha"] = "Senha: campo vazio e ou inválido";
         }
@@ -36,7 +36,7 @@ if(filter_input(INPUT_SERVER,  "REQUEST_METHOD") === "POST") {
         $_SESSION["dados"] = $dados;
 
         if (count($erros) > 0 ) {
-            throw new Exeception("Erros nas iformações ");
+            throw new \Exception("Erros nas iformações ");
         }
 
         $conexao = new PDO("mysql:host=" . SERVIDOR . ";idname=" . BANCO, USUARIO, SENHA);
@@ -48,7 +48,7 @@ if(filter_input(INPUT_SERVER,  "REQUEST_METHOD") === "POST") {
         ));
         $resultado = $pre->fetch();
         if ($resultado) {
-            throw new Exception("Login: Login já cadastrado!");
+            throw new \Exception("Login: Login já cadastrado!");
         }
 
         $senha = password_hash($senha, PASSWORD_BCRYPT, ['cost' => 12]);
@@ -64,9 +64,9 @@ if(filter_input(INPUT_SERVER,  "REQUEST_METHOD") === "POST") {
         ));
 
         header("HTTP 1/1 302 Redirect");
-        header("Location: idex.php");
-    }catch (Exception $e){
-        $erros[] =  $e->getMenssage();
+        header("Location: index.php");
+    }catch ( Exception $pe){
+        $erros[] =  $pe->getMessage();
         $_SESSION["erros"] = $erros;
     }finally {
         $conexao = null;
@@ -123,7 +123,7 @@ if(filter_input(INPUT_SERVER,  "REQUEST_METHOD") === "POST") {
         ?>
        
         <h4>Cadastro inicial do usuário</h4>
-        <form id="usuario_cadastro" action="conta.php" method="post">
+        <form id="usuario_cadastro" action="conta .php" method="post">
           <div class="form-floating">
               <label for="email" class="col-sm-2 col-form-label col-form-label">E-mail</label>
               <div >
@@ -151,7 +151,9 @@ if(filter_input(INPUT_SERVER,  "REQUEST_METHOD") === "POST") {
             <button type="submit" class="btn btn-primary" id="botao_cadastrar">Cadastrar</button>
             <button type="reset" class="btn btn-secondary" id="botao_limpar">Limpar</button>
         </form>
-        <p class="text-center"><a href="./menu.php">Cadastrar-se!</a></p>
+        <?php
+        unset($_SESSION["dados"]);
+        ?>
      
     </main>
 
