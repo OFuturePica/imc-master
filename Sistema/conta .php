@@ -51,10 +51,11 @@ if(filter_input(INPUT_SERVER,  "REQUEST_METHOD") === "POST") {
             throw new \Exception("Login: Login já cadastrado!");
         }
 
+
         $senha = password_hash($senha, PASSWORD_BCRYPT, ['cost' => 12]);
 
-        $sql= "insert into usuario(nome, email, login, senha) VALUE(?, ?, ?, ?)";
-
+        $sql= "insert into usuario(nome, email, login, senha) VALUES (?, ?, ?, ?)";
+echo $sql;
         $pre = $conexao->prepare($sql);
         $pre->execute(array(
             $nome,
@@ -63,8 +64,8 @@ if(filter_input(INPUT_SERVER,  "REQUEST_METHOD") === "POST") {
             $senha
         ));
 
-        header("HTTP 1/1 302 Redirect");
-        header("Location: index.php");
+       // header("HTTP 1/1 302 Redirect");
+       // header("Location: index.php");
     }catch ( Exception $pe){
         $erros[] =  $pe->getMessage();
         $_SESSION["erros"] = $erros;

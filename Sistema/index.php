@@ -24,10 +24,10 @@ if(filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST"){
         $resultado = $pre->fetch();
 
         if(!$resultado){
-            throw new \Exception("login inválido!");
+            throw new Exception ("login inválido!");
         }else{
             if (password_verify($senha, $resultado["senha"]) === false) {
-               throw new \Exception("senha inválida!"); 
+               throw new \Exception ("senha inválida!"); 
             }else {
                 $_SESSION["usuario_id"] = $resultado["id"];
                 $_SESSION["usuario"] = $resultado["nome"];
