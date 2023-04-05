@@ -5,73 +5,46 @@ session_start();
 <?php
 require_once("conexao.php");
 
-if(filter_input(INPUT_SERVER,  "REQUEST_METHOD") === "POST") {
-    try{
-        $erros = [];
-        $dados = [];
+$nome = '';
+$email = '';
+$logi = '';
+$senha = '';
 
-        $nome = filter_input(INPUT_POST, "nome", FILTER_SANITIZE_STRING );
-        if (!$nome) {
-            $erros["nome"] = "Nome: campo vazio e  ou informção incálida";
-        }
-        $dados["nome"] = $nome;
+if($_SERVER['REQUEST_METHOD'] == 'post'){
 
-        $email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);  
-        if (!$email){
-            $erros["email"] = "E-mail: campo vasio e ou informação inválida" ; 
-        }
-        $dados["email"] = $email;
-
-        $login = filter_input(INPUT_POST, "login",  FILTER_SANITIZE_STRING );
-        if (!$login){
-            $erros["login"] =  "Login: campo vazio e ou informção inválida" ; 
-        }
-        $dados["login"] = $login;
-
-        $senha =  filter_input(INPUT_POST, "senha", FILTER_SANITIZE_STRING );
-        if (!$senha){
-            $erros["senha"] = "Senha: campo vazio e ou inválido";
-        }
-        $dasdos["senha"] = $senha;
-        $_SESSION["dados"] = $dados;
-
-        if (count($erros) > 0 ) {
-            throw new \Exception("Erros nas iformações ");
-        }
-
-        $conexao = new PDO("mysql:host=" . SERVIDOR . ";idname=" . BANCO, USUARIO, SENHA);
-
-        $sql = "select * form usuario where login= ?";
-        $pre = $conexao->prepare($sql);
-        $pre->execute(array(
-            $login
-        ));
-        $resultado = $pre->fetch();
-        if ($resultado) {
-            throw new \Exception("Login: Login já cadastrado!");
-        }
-
-
-        $senha = password_hash($senha, PASSWORD_BCRYPT, ['cost' => 12]);
-
-        $sql= "insert into usuario(nome, email, login, senha) VALUES (?, ?, ?, ?)";
-echo $sql;
-        $pre = $conexao->prepare($sql);
-        $pre->execute(array(
-            $nome,
-            $email,
-            $login,
-            $senha
-        ));
-
-       // header("HTTP 1/1 302 Redirect");
-       // header("Location: index.php");
-    }catch ( Exception $pe){
-        $erros[] =  $pe->getMessage();
-        $_SESSION["erros"] = $erros;
-    }finally {
-        $conexao = null;
+    if(insset($_POST_post['nome'])){
+        $nome =  mysqli_real_escape_string($conexao, $_POST['nome']);
     }
+
+    if(insset($_POST_post['email'])){
+        $email =  mysqli_real_escape_string($conexao, $_POST['email']);
+    }
+
+    if(insset($_post['login'])){
+        $login =  mysqli_real_escape_string($conexao, $_POST['login']);
+    }
+    
+    if(insset($_post['senha'])){
+        $senha =  mysqli_real_escape_string($conexao, $_POST['senha']);
+    }
+
+    $sql = "SELECT login FROM usuario WHERE email = '$login' ";
+    $verifiLogin = mysqli_query($conexao, $sql);
+    $ver =  mysqli_num_rows($verifiLogin);
+
+    if($ver > 0 ){
+
+        echo = " lopgin já existente ";
+    } else{
+        $sql = "INSERT INTO usuario (nome, email, logi, senha) VALUES ('$nome','$email', '$logi',  '$senha')";
+    }
+
+    if (mysqli_query($conexao, $sql)) {
+        echo "Dados inseridos com sucesso!";
+    } else {
+        echo "Erro ao inserir os dados: " . mysqli_error($conexao);
+    }
+
 }
 
 ?>
