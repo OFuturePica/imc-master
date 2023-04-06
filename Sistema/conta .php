@@ -34,7 +34,7 @@ if($_SERVER['REQUEST_METHOD'] == 'post'){
 
     if($ver > 0 ){ 
 
-        echo = " lopgin já existente ";
+        echo " lopgin já existente ";
     } else{
         $sql = "INSERT INTO usuario (nome, email, logi, senha) VALUES ('$nome','$email', '$logi',  '$senha')";
     }
