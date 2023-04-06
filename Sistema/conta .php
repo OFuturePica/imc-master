@@ -32,7 +32,7 @@ if($_SERVER['REQUEST_METHOD'] == 'post'){
     $verifiLogin = mysqli_query($conexao, $sql);
     $ver =  mysqli_num_rows($verifiLogin);
 
-    if($ver > 0 ){ ;
+    if($ver > 0 ){ 
 
         echo = " lopgin já existente ";
     } else{
