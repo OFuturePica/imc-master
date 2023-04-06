@@ -92,5 +92,5 @@
 <script>
     //devido ao load precisa carregar o arquivo js dessa forma
     var url = "./js/sistema/conta_receber.js";
-    $.getScript(url);
+  
 </script>

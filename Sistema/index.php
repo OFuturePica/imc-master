@@ -1,49 +1,39 @@
 <?php
-ini_set("session.cookie_secure", 1);
-session_start();
+include('conexao.php'); 
 
-?>
-<?php
-require_once("conexao.php");
+if(isset($_POST['login']) && isset($_POST['senha'])){
+    
+    if(strlen($_POST['login']) == 0 || strlen($_POST['senha']) == 0){
 
-if(filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST"){
-    try {
-        $erros = [];
-        $login = filter_input(INPUT_POST, "login", FILTER_SANITIZE_STRING);
-        $senha = filter_input(INPUT_POST, "senha", FILTER_SANITIZE_STRING);
+    } else {
 
-        $sql = "select * form usuario where login = ?";
+        $login = $conexao->real_escape_string($_POST['login']);
+        $senha = $conexao->real_escape_string($_POST['senha']);
 
-        $conexao = new PDO("mysql:host=" . SERVIDOR . ";dbname=" . BANCO, USUARIO,  SENHA);
+        $sql_code = "SELECT * FROM usuario WHERE login = '$login' AND senha = '$senha'";
+        $sql_query = $conexao->query($sql_code) or die ("Falha na execução do codigo SQL: ". $conexao->error);
 
-        $pre = $conexao->prepare($sql);
-        $pre->execute(array(
-            $login
-        ));
+        $quantidade = $sql_query->num_rows;
 
-        $resultado = $pre->fetch();
+        if($quantidade == 1) {
 
-        if(!$resultado){
-            throw new Exception ("login inválido!");
-        }else{
-            if (password_verify($senha, $resultado["senha"]) === false) {
-               throw new \Exception ("senha inválida!"); 
-            }else {
-                $_SESSION["usuario_id"] = $resultado["id"];
-                $_SESSION["usuario"] = $resultado["nome"];
+            $usuario = $sql_query->fetch_assoc();
+
+            if(!isset($_SESSION)){
+                session_start();
             }
+
+            $_SESSION['id'] = $usuario['id'];
+            $_SESSION['nome'] = $usuario['nome'];
+
+            header("Location: m.php");
+
+        } else {
+            echo "Verifique seu login e sua senha e tente novamente";
         }
-
-        header("HTTP 1/1 302 Redirect");
-        header("Location: m.php");
-
-    } catch (Exeception $pe) {
-        $erros[] = $pe->getMessage();
-        $_SESSION["erros"] = $erros;
-    } finally {
-        $conexao = null;
     }
 }
+
 ?>
 
 
@@ -82,19 +72,8 @@ if(filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST"){
         </nav>
     </header>
     <main class="form-signin">
-        <?php
-        if (isset($_SESSION["erros"])) {
-            echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>";
-            echo "<button type='button' class='btn-close btn-sm' data-bs-dismiss='alert'
-                aria-label='Close'></button>";
-            foreach ($_SESSION["erros"] as $chave => $valor) {
-                echo $valor . "<br>";
-            }
-            echo "</div>";
-        }
-        unset($_SESSION["erros"]);
-        ?>
-        <form id="formlogin" action="index.php" method="post">
+
+        <form id="formlogin"  method="POST">
             <h1 class="h3 mb-3 fw-normal">Favor logar-se</h1>
             <div  class="form-floating">
             <input type="texto" class="form-control" id="login" name="login" maxlength="10" placeholder="Login" required="required"> <label for="login">Login
@@ -125,4 +104,4 @@ if(filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST"){
     <script src="./js/sistema/login.js"></script>
 </body>
 
-</html>s
+</html>

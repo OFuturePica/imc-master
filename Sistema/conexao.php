@@ -1,10 +1,12 @@
 <?php
-const SERVIDOR = "localhost:3306";
 
-const BANCO = "imc-master";
+$hostname = "localhost";
+$bancodedados = "imc-maste";
+$usuario = "root";
+$senha = "";
 
-const USUARIO = "root";
+$conexao = mysqli_connect($hostname, $usuario, $senha, $bancodedados) or die ("Não foi possivel conectar")
 
-const SENHA = "";
 
-const REGISTROS_POR_PAGINA = 5;
+
+?>
