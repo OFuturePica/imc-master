@@ -32,7 +32,7 @@ if($_SERVER['REQUEST_METHOD'] == 'post'){
     $verifiLogin = mysqli_query($conexao, $sql);
     $ver =  mysqli_num_rows($verifiLogin);
 
-    if($ver > 0 ){
+    if($ver > 0 ){ ;
 
         echo = " lopgin já existente ";
     } else{
@@ -45,7 +45,15 @@ if($_SERVER['REQUEST_METHOD'] == 'post'){
         echo "Erro ao inserir os dados: " . mysqli_error($conexao);
     }
 
+    $_SESSION['nome'] = $nome;
+    $_SESSION['email'] = $email;
+    $_SESSION['login'] = $logi;
+    $_SESSION['senha'] = $senha;
+
+ mysqli_close($conexao);
+
 }
+
 
 ?>
 
