@@ -29,8 +29,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $verificarMail = mysqli_query($conexao, $sql);
     $count = mysqli_num_rows($verificarMail);
 
+<<<<<<< HEAD
     if($count > 0 ){ 
         echo "login já existente";
+=======
+    if($ver > 0 ){ 
+
+        echo " lopgin já existente ";
+>>>>>>> fa91a928fe01f659c75672ce15c8ec006f206398
     } else{
         $sql = "INSERT INTO usuario (nome, email, login, senha) VALUES ('$nome','$email', '$logi',  '$senha')";
     
