@@ -1,7 +1,7 @@
 <?php
 
 $hostname = "localhost";
-$bancodedados = "imc-maste";
+$bancodedados = "imc-master";
 $usuario = "root";
 $senha = "";
 

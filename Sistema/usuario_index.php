@@ -50,30 +50,6 @@
                 </div>
            
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover" id="lista_usuario">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nome</th>
-                                <th>A&ccedil;&otilde;es</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            foreach ($usuarios as $usuario) {
-                            ?>
-                                <tr id="<?php echo $usuario['id']."_usuario"; ?>">
-                                    <td><?php echo $usuario["id"]; ?></td>
-                                    <td><?php echo $usuario["nome"]; ?></td>
-                                    <td>
-                                        <a id="botao_view_usuario" chave="<?php echo $usuario['id']; ?>" class="btn btn-info btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
-                                        <a id="botao_editar_usuario" chave="<?php echo $usuario['id']; ?>" class="btn btn-success btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                        <a id="botao_excluir_usuario" chave="<?php echo $usuario['id']; ?>" class="btn btn-danger btn-sm" title="Excluir"><i class="fas fa-trash-alt"></i></a>
-                                    </td>
-                                </tr>
-                          
-                        </tbody>
-                    </table>
                    
                 </div>
           

@@ -113,7 +113,7 @@ $(document).ready(function () {
     });
 
     $("#home_link").click(function () {
-        $(location).prop("href", "menu.php");
+        $(location).prop("href", "m.php");
     });
 
     $("#categoria_link").click(function (e) {
