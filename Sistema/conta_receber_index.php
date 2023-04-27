@@ -1,5 +1,4 @@
 
-<br>
 <div class="container">
     <div class="row">
         <div id="carregando_contareceber" class="d-none text-center">

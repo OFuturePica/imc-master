@@ -15,6 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if (isset($_POST["data"])) {
         $data = filter_var($_POST["data"], FILTER_SANITIZE_STRING);
+
+        echo $data;
     }
 
     $sql = "INSERT INTO imc (altura, peso, data) VALUES ('$altura', '$peso', '$data')";
