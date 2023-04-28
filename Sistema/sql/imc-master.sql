@@ -55,7 +55,7 @@ CREATE TABLE `usuario` (
 CREATE TABLE `imc` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `peso` varchar(100) NOT NULL,
-  `altura` float NOT NULL,
+  `altura` varchar(100) NOT NULL,
   `data` date NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
